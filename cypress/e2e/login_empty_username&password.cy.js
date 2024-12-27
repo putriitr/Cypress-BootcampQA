@@ -14,18 +14,39 @@
 
 
 
-// With Intercept
+// // With Intercept
+// /// <reference types="cypress" />
+
+// describe('Login Feature - Empty Username and Password', () => {
+//   it('Pengguna tidak dapat login jika username dan password tidak diisi', () => {
+//     cy.intercept('POST', '**/auth/login').as('loginRequest');
+
+//     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+
+//     cy.get('[name="username"]').clear(); 
+//     cy.get('[name="password"]').clear(); 
+
+//     cy.get('[class="oxd-button oxd-button--medium oxd-button--main orangehrm-login-button"]').click();
+//   });
+// });
+
+
+
+// POM
 /// <reference types="cypress" />
 
-describe('Login Feature - Empty Username and Password', () => {
-  it('Pengguna tidak dapat login jika username dan password tidak diisi', () => {
-    cy.intercept('POST', '**/auth/login').as('loginRequest');
+import EmptyBoth from '../support/page_objects/EmptyBoth'; 
 
-    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+describe('Login Feature - Empty Username & Password', () => {
+  const emptyBothObj = new EmptyBoth(); 
 
-    cy.get('[name="username"]').clear(); 
-    cy.get('[name="password"]').clear(); 
+  it('Pengguna tidak dapat login jika password tidak diisi', () => {
+    emptyBothObj.visit();
 
-    cy.get('[class="oxd-button oxd-button--medium oxd-button--main orangehrm-login-button"]').click();
+    emptyBothObj.fillUsername(''); 
+    emptyBothObj.fillPassword(''); 
+    emptyBothObj.submitLogin(); 
+
+    emptyBothObj.getRequiredMessage().should('be.visible');
   });
 });
