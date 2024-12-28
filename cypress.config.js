@@ -3,6 +3,7 @@ const mochawesome = require('cypress-mochawesome-reporter/plugin');
 module.exports = {
   reporter: 'cypress-mochawesome-reporter',
   e2e: {
+    baseUrl: 'https://opensource-demo.orangehrmlive.com',
     setupNodeEvents(on, config) {
       mochawesome(on);
     },
